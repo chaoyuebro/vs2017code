@@ -1,9 +1,0 @@
-*.rar
-bin/
-muduo/
-obj/
-.gitignore
-*.a
-*.so
-*.dll
-*.lib
