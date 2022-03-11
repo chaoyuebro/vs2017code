@@ -1,0 +1,7 @@
+{
+    "key1" : "value1",
+    "key2" : 1,
+    "key3" : false,
+    "key_array" : [ "string", 22 ]
+}
+ 

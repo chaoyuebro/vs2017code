@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1705
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project2_chat", "Project2_chat\Project2_chat.vcxproj", "{20286B2D-7D70-4EEE-9450-4F8A28215439}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project2_client", "..\Project2_client\Project2_client\Project2_client.vcxproj", "{ABB476E6-511D-41A8-A01A-4F32AF94AE09}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Debug|ARM.ActiveCfg = Debug|ARM
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Debug|ARM.Build.0 = Debug|ARM
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Debug|ARM64.Build.0 = Debug|ARM64
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Debug|x64.ActiveCfg = Debug|x64
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Debug|x64.Build.0 = Debug|x64
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Debug|x86.ActiveCfg = Debug|x86
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Debug|x86.Build.0 = Debug|x86
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Release|ARM.ActiveCfg = Release|ARM
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Release|ARM.Build.0 = Release|ARM
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Release|ARM64.ActiveCfg = Release|ARM64
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Release|ARM64.Build.0 = Release|ARM64
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Release|x64.ActiveCfg = Release|x64
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Release|x64.Build.0 = Release|x64
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Release|x86.ActiveCfg = Release|x86
+		{20286B2D-7D70-4EEE-9450-4F8A28215439}.Release|x86.Build.0 = Release|x86
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Debug|ARM.ActiveCfg = Debug|ARM
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Debug|ARM.Build.0 = Debug|ARM
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Debug|ARM64.Build.0 = Debug|ARM64
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Debug|x64.ActiveCfg = Debug|x64
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Debug|x64.Build.0 = Debug|x64
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Debug|x86.ActiveCfg = Debug|x86
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Debug|x86.Build.0 = Debug|x86
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Release|ARM.ActiveCfg = Release|ARM
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Release|ARM.Build.0 = Release|ARM
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Release|ARM64.ActiveCfg = Release|ARM64
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Release|ARM64.Build.0 = Release|ARM64
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Release|x64.ActiveCfg = Release|x64
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Release|x64.Build.0 = Release|x64
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Release|x86.ActiveCfg = Release|x86
+		{ABB476E6-511D-41A8-A01A-4F32AF94AE09}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4491997-B504-4013-9201-A31AF423E963}
+	EndGlobalSection
+EndGlobal

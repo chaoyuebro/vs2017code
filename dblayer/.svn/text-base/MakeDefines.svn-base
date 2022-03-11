@@ -1,0 +1,150 @@
+# Common Define for Makefile
+
+# To put more focus on warnings, be less verbose as default
+# # Use 'make V=1' to see the full commands
+
+ifeq ("$(origin V)", "command line")
+   TK_BUILD_VERBOSE = $(V)
+endif
+ifndef TK_BUILD_VERBOSE
+   TK_BUILD_VERBOSE = 0
+endif
+
+ifeq ("$(origin DEBUG)", "command line")
+   TK_BUILD_DEBUG = $(DEBUG)
+endif
+ifndef TK_BUILD_DEBUG
+   TK_BUILD_DEBUG = 0
+endif
+
+# switch for distributed build using distcc if you are in distcc environment
+ifeq ("$(origin D)", "command line")
+   TK_DISTRIBUTED_BUILD = $(D)
+endif
+ifndef TK_DISTRIBUTED_BUILD
+   TK_DISTRIBUTED_BUILD = 0
+endif
+
+CC 			= gcc
+CPP 			= g++
+CPPFLAGS 		= -Wall -fpermissive -Werror -fno-strict-aliasing -std=c++0x
+CXXFLAGS        = -fPIC -rdynamic
+#CXXFLAGS 		= -O2 -rdynamic -fexceptions -fnon-call-exceptions
+CFLAGS 			= -O2 -g
+LDFLAGS         =
+DEBUGFLAGS 		=  -g -D_DEBUG
+RELEASEFLAGS    = -DNDEBUG
+AR 			    = ar
+ARFLAGS         = r
+SHELL 			= /bin/sh
+MAKE 			= make
+MKDIR           = mkdir -p
+EXE 			= 
+RM              = rm -f
+EXCLUDE_DIRS    ?= .git 
+SUBDIRS         ?= $(filter-out $(EXCLUDE_DIRS),$(basename $(patsubst ./%,%,$(shell find . -maxdepth 1 -type d))))
+
+ifeq ($(TK_DISTRIBUTED_BUILD),1)
+	CC 		= distcc gcc
+	CPP     = distcc g++
+endif
+
+ifeq ($(TK_BUILD_VERBOSE),0)
+	QUIET_CC        = @echo '   ' CC $@;
+	QUIET_CPP       = @echo '   ' CPP $@;
+	QUIET_LINK      = @echo '   ' LINK $@;
+	QUIET_AR        = @echo '   ' AR $@;
+	QUIET           = @
+else
+	ARFLAGS         := $(ARFLAGS)v
+
+endif
+
+ifeq ($(TK_BUILD_DEBUG),1)
+	CFLAGS += ${DEBUGFLAGS}
+	CPPFLAGS += ${DEBUGFLAGS}
+	CXXFLAGS += ${DEBUGFLAGS}
+else
+    CFLAGS   += ${RELEASEFLAGS}
+    CPPFLAGS += ${RELEASEFLAGS}
+    CXXFLAGS += ${RELEASEFLAGS}
+endif
+
+COMMON_INCLUDES = -I$(TO_ROOT)/include -I$(TO_ROOT)/src
+
+3P_INCLUDES = -I/usr/include/mysql/
+
+3P_LIBS =	-L/usr/lib \
+                -L/usr/local/lib \
+                -L/usr/lib64/mysql \
+                -L$(TO_ROOT)/lib64 \
+                -lboost_thread-mt \
+                -lboost_system-mt \
+                -lmysqlclient \
+                -lmysqlclient_r \
+#                -lpthread \
+#                -lboost_date_time-mt \
+#                -lboost_filesystem \
+
+.PHONY: all unit-test clean $(SUBDIRS) force_look
+
+SRCDIR = .
+SRC ?= $(foreach dir, $(SRCDIR), $(wildcard $(dir)/*.cpp) )
+SRC_CC ?= $(foreach dir, $(SRCDIR), $(wildcard $(dir)/*.cc) )
+OBJS ?= $(notdir $(SRC:.cpp=.o) )
+OBJS_CC ?= $(notdir $(SRC_CC:.cc=.o) )
+OBJS += $(OBJS_CC)
+TEST_OBJS ?=
+OBJS := $(filter-out $(TEST_OBJS),$(OBJS))
+
+target ?= ${OBJS} ${SUBDIRS}
+all: ${target}
+
+
+unit-test  : $(OBJS) $(SUBDIRS)
+
+%.o : %.cpp
+	$(QUIET_CPP)$(CPP) $(CFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) -c $<
+
+%.P : %.cpp
+	$(QUIET)rm -f $@; \
+	$(CPP) -M -MP $(CFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES)  $< > $@.$$$$; \
+	sed -e 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
+
+%.o : %.cc
+	$(QUIET_CPP)$(CPP) $(CFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES) -c $<
+
+%.P : %.cc
+	$(QUIET)rm -f $@; \
+	$(CPP) -M -MP $(CFLAGS) $(CPPFLAGS) $(CXXFLAGS) $(INCLUDES)  $< > $@.$$$$; \
+	sed -e 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
+
+
+ifneq "$(MAKECMDGOALS)" "clean"
+  -include $(OBJS:.o=.P)
+endif
+
+
+
+rebuild:
+	$(MAKE) clean
+	$(MAKE) all
+clean::
+	rm -rf *.o *.P
+	@for dir in $(SUBDIRS); do\
+	(cd $$dir ; $(MAKE) clean); done
+
+help:
+	@echo 'clean            -Remove generated files '
+	@echo 'all              -Build all targets'
+	@echo 'rebuild          -Combine clean and all targets'
+	@echo 'make V=1         -enable verbose output'
+	@echo 'make DEBUG=1     -enable debug build'
+	@echo 'make D=1         -enable distributed build using distcc if you are already in distcc environment'
+
+
+
+$(SUBDIRS):
+	$(MAKE) -C $@
